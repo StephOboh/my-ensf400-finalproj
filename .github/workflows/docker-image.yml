@@ -1,17 +1,20 @@
 name: Docker Image CI
 
+# trigger the workflow on push or pull request to the 'main' branch
 on:
   push:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
 
+# define jobs to run the workflow
 jobs:
 
   build:
 
     runs-on: ubuntu-latest
 
+    # checkout repository code and build the docker image using Dockerfile
     steps:
     - uses: actions/checkout@v4
     - name: Build the Docker image
