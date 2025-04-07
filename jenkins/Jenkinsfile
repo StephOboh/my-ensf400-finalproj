@@ -11,6 +11,29 @@ pipeline {
    }
 
   stages {
+    stage('Set Permissions') {
+            steps {
+                sh 'chmod +x gradlew'
+                sh 'ls -la'  // Verify permissions
+            }
+        }
+        
+        stage('Build') {
+            steps {
+                sh './gradlew clean assemble'
+            }
+        }
+    
+
+    
+    stage('Test Docker') {
+      steps {
+        sh 'docker run hello-world'
+      }
+    }
+
+
+
 
     // build the war file (the binary).  This is the only
     // place that happens.
