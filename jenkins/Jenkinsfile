@@ -10,6 +10,10 @@ pipeline {
         HTTP_PROXY = 'http://127.0.0.1:9888'
    }
 
+   tools {
+        jdk 'jdk17'  // Must match the JDK name in Jenkins Global Tools
+    }
+
   stages {
     stage('Set Permissions') {
             steps {
