@@ -143,7 +143,7 @@ task expensesBdd(type: Test) {
                               .filter { it.name == "jacocoagent.jar" }
                               .singleFile
             jvmArgs = ["-javaagent:$jacocoAgent=destfile=$buildDir/jacoco/expenses_bdd.exec,append=false"]
-            main = "io.cucumber.core.cli.Main"
+            mainClass = "io.cucumber.core.cli.Main"
             classpath = configurations.cucumberBddTestCompileClasspath +
                         sourceSets.main.output +
                         sourceSets.test.output +
