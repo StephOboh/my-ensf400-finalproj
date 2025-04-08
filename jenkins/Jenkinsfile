@@ -11,7 +11,12 @@ pipeline {
    }
 
   stages {
-
+    stage('Set Permissions') {
+      steps {
+        sh 'chmod +x gradlew'
+        sh 'ls -la'  // Verify permissions
+      }
+    }
     // build the war file (the binary).  This is the only
     // place that happens.
     stage('Build') {
