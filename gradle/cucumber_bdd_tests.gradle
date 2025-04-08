@@ -36,7 +36,8 @@ task libraryBdd(type: Test) {
                               .filter { it.name == "jacocoagent.jar" }
                               .singleFile
             jvmArgs = ["-javaagent:$jacocoAgent=destfile=$buildDir/jacoco/library_bdd.exec,append=false"]
-            main = "io.cucumber.core.cli.Main"
+            // Use 'mainClass' instead of the deprecated 'main'
+            mainClass = "io.cucumber.core.cli.Main"
             classpath = configurations.cucumberBddTestCompileClasspath +
                         sourceSets.main.output +
                         sourceSets.test.output +
@@ -72,7 +73,8 @@ task mathBdd(type: Test) {
                               .filter { it.name == "jacocoagent.jar" }
                               .singleFile
             jvmArgs = ["-javaagent:$jacocoAgent=destfile=$buildDir/jacoco/math_bdd.exec,append=false"]
-            main = "io.cucumber.core.cli.Main"
+            // Replace deprecated 'main' with 'mainClass'
+            mainClass = "io.cucumber.core.cli.Main"
             classpath = configurations.cucumberBddTestCompileClasspath +
                         sourceSets.main.output +
                         sourceSets.test.output +
@@ -107,7 +109,8 @@ task authBdd(type: Test) {
                               .filter { it.name == "jacocoagent.jar" }
                               .singleFile
             jvmArgs = ["-javaagent:$jacocoAgent=destfile=$buildDir/jacoco/auth_bdd.exec,append=false"]
-            main = "io.cucumber.core.cli.Main"
+            // Use mainClass here as well
+            mainClass = "io.cucumber.core.cli.Main"
             classpath = configurations.cucumberBddTestCompileClasspath +
                         sourceSets.main.output +
                         sourceSets.test.output +
@@ -143,6 +146,7 @@ task expensesBdd(type: Test) {
                               .filter { it.name == "jacocoagent.jar" }
                               .singleFile
             jvmArgs = ["-javaagent:$jacocoAgent=destfile=$buildDir/jacoco/expenses_bdd.exec,append=false"]
+            // Already using mainClass here (no change needed)
             mainClass = "io.cucumber.core.cli.Main"
             classpath = configurations.cucumberBddTestCompileClasspath +
                         sourceSets.main.output +
@@ -178,7 +182,8 @@ task cartesianProductBdd(type: Test) {
                               .filter { it.name == "jacocoagent.jar" }
                               .singleFile
             jvmArgs = ["-javaagent:$jacocoAgent=destfile=$buildDir/jacoco/cartesian_bdd.exec,append=false"]
-            main = "io.cucumber.core.cli.Main"
+            // Change 'main' to 'mainClass'
+            mainClass = "io.cucumber.core.cli.Main"
             classpath = configurations.cucumberBddTestCompileClasspath +
                         sourceSets.main.output +
                         sourceSets.test.output +
