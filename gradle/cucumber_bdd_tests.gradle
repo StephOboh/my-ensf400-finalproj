@@ -1,3 +1,4 @@
+// Define the source set for Cucumber BDD tests
 sourceSets {
     cucumberBddTest {
         java.srcDir 'src/bdd_test/java'
@@ -5,22 +6,23 @@ sourceSets {
     }
 }
 
+// Add dependencies for the cucumberBddTest source set.
+// Note: The "resolvableIntegrationTestImpl" configuration should be defined in your integration test configuration.
 dependencies {
-    // Use the custom, resolvable integration test configuration that you should have defined in integration_tests.gradle
     add("cucumberBddTestImplementation", files(configurations.resolvableIntegrationTestImpl))
     cucumberBddTestImplementation sourceSets.test.output
 }
 
-// in the cucumber task, we divide up the different features to lower the scope.
-// This allows us to have a smaller universe of step definitions per feature file.
+// Define a composite cucumber task that runs several feature-specific tasks.
 task cucumber(type: GradleBuild) {
     tasks = ['libraryBdd', 'mathBdd', 'authBdd', 'expensesBdd', 'cartesianProductBdd']
     mustRunAfter test
 }
 
+// Library BDD Task
 task libraryBdd(type: Test) {
     doFirst {
-        print "\n\nstarting library BDD tests\n\n"
+        println "\n\nstarting library BDD tests\n\n"
     }
     reports.html.required = false
     group = LifecycleBasePlugin.VERIFICATION_GROUP
@@ -29,10 +31,10 @@ task libraryBdd(type: Test) {
     testClassesDirs = sourceSets.cucumberBddTest.output.classesDirs
     classpath = sourceSets.cucumberBddTest.runtimeClasspath
     doLast {
-        // For the library
         javaexec {
             def jacocoAgent = zipTree(configurations.jacocoAgent.singleFile)
-                              .filter { it.name == "jacocoagent.jar" }.singleFile
+                              .filter { it.name == "jacocoagent.jar" }
+                              .singleFile
             jvmArgs = ["-javaagent:$jacocoAgent=destfile=$buildDir/jacoco/library_bdd.exec,append=false"]
             main = "io.cucumber.core.cli.Main"
             classpath = configurations.cucumberBddTestCompileClasspath +
@@ -53,9 +55,10 @@ task libraryBdd(type: Test) {
     }
 }
 
+// Mathematics BDD Task
 task mathBdd(type: Test) {
     doFirst {
-        print "\n\nstarting math-related BDD tests\n\n"
+        println "\n\nstarting math-related BDD tests\n\n"
     }
     reports.html.required = false
     group = LifecycleBasePlugin.VERIFICATION_GROUP
@@ -64,10 +67,10 @@ task mathBdd(type: Test) {
     testClassesDirs = sourceSets.cucumberBddTest.output.classesDirs
     classpath = sourceSets.cucumberBddTest.runtimeClasspath
     doLast {
-        // For the mathematics
         javaexec {
             def jacocoAgent = zipTree(configurations.jacocoAgent.singleFile)
-                              .filter { it.name == "jacocoagent.jar" }.singleFile
+                              .filter { it.name == "jacocoagent.jar" }
+                              .singleFile
             jvmArgs = ["-javaagent:$jacocoAgent=destfile=$buildDir/jacoco/math_bdd.exec,append=false"]
             main = "io.cucumber.core.cli.Main"
             classpath = configurations.cucumberBddTestCompileClasspath +
@@ -87,9 +90,10 @@ task mathBdd(type: Test) {
     }
 }
 
+// Authentication BDD Task
 task authBdd(type: Test) {
     doFirst {
-        print "\n\nstarting authentication BDD tests\n\n"
+        println "\n\nstarting authentication BDD tests\n\n"
     }
     reports.html.required = false
     group = LifecycleBasePlugin.VERIFICATION_GROUP
@@ -98,10 +102,10 @@ task authBdd(type: Test) {
     testClassesDirs = sourceSets.cucumberBddTest.output.classesDirs
     classpath = sourceSets.cucumberBddTest.runtimeClasspath
     doLast {
-        // For authentication stories
         javaexec {
             def jacocoAgent = zipTree(configurations.jacocoAgent.singleFile)
-                              .filter { it.name == "jacocoagent.jar" }.singleFile
+                              .filter { it.name == "jacocoagent.jar" }
+                              .singleFile
             jvmArgs = ["-javaagent:$jacocoAgent=destfile=$buildDir/jacoco/auth_bdd.exec,append=false"]
             main = "io.cucumber.core.cli.Main"
             classpath = configurations.cucumberBddTestCompileClasspath +
@@ -122,9 +126,10 @@ task authBdd(type: Test) {
     }
 }
 
+// Expenses BDD Task
 task expensesBdd(type: Test) {
     doFirst {
-        print "\n\nstarting expenses BDD tests\n\n"
+        println "\n\nstarting expenses BDD tests\n\n"
     }
     reports.html.required = false
     group = LifecycleBasePlugin.VERIFICATION_GROUP
@@ -133,11 +138,11 @@ task expensesBdd(type: Test) {
     testClassesDirs = sourceSets.cucumberBddTest.output.classesDirs
     classpath = sourceSets.cucumberBddTest.runtimeClasspath
     doLast {
-        // For expenses stories
         javaexec {
             def jacocoAgent = zipTree(configurations.jacocoAgent.singleFile)
-                              .filter { it.name == "jacocoagent.jar" }.singleFile
-            jvmArgs = ["-javaagent:$jacocoAgent=destfile=$buildDir/jacoco/auth_bdd.exec,append=false"]
+                              .filter { it.name == "jacocoagent.jar" }
+                              .singleFile
+            jvmArgs = ["-javaagent:$jacocoAgent=destfile=$buildDir/jacoco/expenses_bdd.exec,append=false"]
             main = "io.cucumber.core.cli.Main"
             classpath = configurations.cucumberBddTestCompileClasspath +
                         sourceSets.main.output +
@@ -156,9 +161,10 @@ task expensesBdd(type: Test) {
     }
 }
 
+// Cartesian Product BDD Task
 task cartesianProductBdd(type: Test) {
     doFirst {
-        print "\n\nstarting cartesian product BDD tests\n\n"
+        println "\n\nstarting cartesian product BDD tests\n\n"
     }
     reports.html.required = false
     group = LifecycleBasePlugin.VERIFICATION_GROUP
@@ -169,8 +175,9 @@ task cartesianProductBdd(type: Test) {
     doLast {
         javaexec {
             def jacocoAgent = zipTree(configurations.jacocoAgent.singleFile)
-                              .filter { it.name == "jacocoagent.jar" }.singleFile
-            jvmArgs = ["-javaagent:$jacocoAgent=destfile=$buildDir/jacoco/auth_bdd.exec,append=false"]
+                              .filter { it.name == "jacocoagent.jar" }
+                              .singleFile
+            jvmArgs = ["-javaagent:$jacocoAgent=destfile=$buildDir/jacoco/cartesian_bdd.exec,append=false"]
             main = "io.cucumber.core.cli.Main"
             classpath = configurations.cucumberBddTestCompileClasspath +
                         sourceSets.main.output +
