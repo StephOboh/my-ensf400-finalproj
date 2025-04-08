@@ -267,6 +267,7 @@ check.dependsOn(jacocoTestReport)
 
 sonarqube {
     properties {
+        property "sonar.host.url", "https://stunning-space-fortnight-97j4gpxppxvhjgg-9000.app.github.dev/"
         property "sonar.projectKey", "$projectname"
         property "sonar.projectName", "$projectname"
         property "sonar.projectDescription", "A demonstration of a web application with good test coverage and best practices"
