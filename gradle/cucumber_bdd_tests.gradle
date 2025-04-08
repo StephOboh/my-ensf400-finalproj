@@ -6,7 +6,7 @@ sourceSets {
 }
 
 dependencies {
-    add("cucumberBddTestImplementation", files(configurations.integrationTestImplementation))
+    add("cucumberBddTestImplementation", files(configurations.resolvableIntegrationTestImpl))
     cucumberBddTestImplementation sourceSets.test.output
 }
 

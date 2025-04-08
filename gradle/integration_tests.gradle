@@ -5,6 +5,14 @@ sourceSets {
     }
 }
 
+configurations {
+    resolvableIntegrationTestImpl {
+        canBeResolved = true
+        canBeConsumed = false
+        extendsFrom integrationTestImplementation
+    }
+}
+
 dependencies {
     integrationTestImplementation sourceSets.main.output
     add("integrationTestImplementation", files(configurations.testRuntimeClasspath))
