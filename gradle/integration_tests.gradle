@@ -7,7 +7,7 @@ sourceSets {
 
 dependencies {
     integrationTestsImplementation sourceSets.main.output
-    integrationTestsImplementation configurations.testImplementation
+    integrationTestImplementation files(configurations.testImplementation)
 }
 
 task integrate(type: Test) {
