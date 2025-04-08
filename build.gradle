@@ -173,7 +173,7 @@ dependencies {
     localDeps group: 'com.h2database', name: 'h2', version: '1.4.200'
 
     // so we can put a copy of h2 in a convenient place
-    implementation configurations.localDeps
+    implementation files(configurations.localDeps)
 
     // so we can programmatically run flyway at startup
     // https://mvnrepository.com/artifact/org.flywaydb/flyway-core
@@ -254,8 +254,8 @@ generateCucumberReports.dependsOn(cucumber)
 jacocoTestReport {
     executionData(fileTree(dir: "$buildDir/jacoco", include: '*.exec'))
     reports {
-        xml.enabled true
-        csv.enabled false
+        xml.required = true
+        csv.required = false
         xml.destination file("${buildDir}/jacoco/jacoco.xml")
         html.destination file("${buildDir}/reports/jacoco")
     }

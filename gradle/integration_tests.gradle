@@ -1,20 +1,20 @@
 sourceSets {
-    integrationTests {
+    integrationTest {
         java.srcDir 'src/integration_test/java'
         resources.srcDir 'src/integration_test/resources'
     }
 }
 
 dependencies {
-    integrationTestsImplementation sourceSets.main.output
-    integrationTestImplementation files(configurations.testImplementation)
+    integrationTestImplementation sourceSets.main.output
+    add("integrationTestImplementation", files(configurations.testImplementation))
 }
 
 task integrate(type: Test) {
     group = LifecycleBasePlugin.VERIFICATION_GROUP
     description = 'Runs the integration tests.'
-    testClassesDirs = sourceSets.integrationTests.output.classesDirs
-    classpath = sourceSets.integrationTests.runtimeClasspath
+    testClassesDirs = sourceSets.integrationTest.output.classesDirs
+    classpath = sourceSets.integrationTest.runtimeClasspath
     maxHeapSize = '1024m'
     mustRunAfter test
 
