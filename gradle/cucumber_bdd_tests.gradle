@@ -43,7 +43,7 @@ task libraryBdd (type: Test) {
             classpath = configurations.cucumberBddTestCompileClasspath +
                     sourceSets.main.output +
                     sourceSets.test.output +
-                    sourceSets.cucumberBddTest.output +
+                    sourceSets.cucumberBddTests.output +
                     sourceSets.integrationTests.output
 
             args = ['--monochrome',
