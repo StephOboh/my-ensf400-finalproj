@@ -6,7 +6,7 @@ remotes {
         // host = 'uitestbox'
         // user = 'cuser'
         host = 'localhost'  // Target services in Codespaces
-        user = 'StephOboh'  // Change to your Codespaces user
+        user = 'codespace'  // Change to your Codespaces user
         fileTransfer = 'scp'
     }
 }
