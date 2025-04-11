@@ -50,16 +50,27 @@ task runApiTestsOnUiTest {
 // is on the local windows box of the teacher.
 task deployToTest {
     doFirst {
-        ssh.runInOrder {
-            session(remotes.uitestbox)
-                    {
-                        put from: '/var/lib/jenkins/workspace/demo/build/libs/demo-1.0.0.war', into: '~/demo.war'
-                        execute 'sudo mv demo.war /opt/tomcat/webapps/'
-                        execute 'rm -fr demo_tests'
-                        execute 'git clone cuser@jenkinsbox:~/demo demo_tests --branch master'
-                        execute 'cd demo_tests;pipenv install 2>/dev/null'
-                    }
+    //     ssh.runInOrder {
+    //         session(remotes.uitestbox)
+    //                 {
+    //                     put from: '/var/lib/jenkins/workspace/demo/build/libs/demo-1.0.0.war', into: '~/demo.war'
+    //                     execute 'sudo mv demo.war /opt/tomcat/webapps/'
+    //                     execute 'rm -fr demo_tests'
+    //                     execute 'git clone cuser@jenkinsbox:~/demo demo_tests --branch master'
+    //                     execute 'cd demo_tests;pipenv install 2>/dev/null'
+    //                 }
 
+    //     }
+    // }
+
+     ssh.runInOrder {
+            session(remotes.uitestbox) {
+                put from: 'build/libs/demo-1.0.0.war', into: '~/demo.war'
+                execute 'sudo mv ~/demo.war /var/lib/tomcat9/webapps/'  // Updated path
+                execute 'rm -fr demo_tests'
+                execute 'git clone https://github.com/StephOboh/my-ensf400-finalproj.git demo_tests'  // HTTPS
+                execute 'cd demo_tests; pipenv install'
+            }
         }
     }
     doLast {
