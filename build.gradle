@@ -252,12 +252,20 @@ task startH2Console(type: Exec) {
 generateCucumberReports.dependsOn(cucumber)
 
 jacocoTestReport {
+    // executionData(fileTree(dir: "$buildDir/jacoco", include: '*.exec'))
+    // reports {
+    //     xml.enabled true
+    //     csv.enabled false
+    //     xml.destination file("${buildDir}/jacoco/jacoco.xml")
+    //     html.destination file("${buildDir}/reports/jacoco")
+    // }
     executionData(fileTree(dir: "$buildDir/jacoco", include: '*.exec'))
     reports {
-        xml.enabled true
-        csv.enabled false
-        xml.destination file("${buildDir}/jacoco/jacoco.xml")
-        html.destination file("${buildDir}/reports/jacoco")
+        xml.required = true
+        xml.destination file("${buildDir}/reports/jacoco/jacoco.xml")
+        html.required = true
+        html.destination file("${buildDir}/reports/jacoco/html")
+        csv.required = false
     }
 }
 
@@ -277,6 +285,7 @@ sonarqube {
         // property "sonar.login", "admin"
         // property "sonar.password", "password"
         property "sonar.login", project.findProperty('sonar.login')  // This will use the token from gradle.properties
+        property "sonar.java.test.binaries", "build/classes/java/test"
     }
 }
 
@@ -545,22 +554,53 @@ task runAllTests(type: GradleBuild) {
 }
 
 // more info on test logging: https://discuss.gradle.org/t/whats-upcoming-in-gradle-1-1-test-logging/7741
+// test {
+//     testLogging {
+//         exceptionFormat "full" // default is "short"
+//         // uncomment the following to see the unit test progress in the output
+//         //events "started", "passed", "skipped", "failed", "standardOut", "standardError"
+//         events "passed", "skipped", "failed", "standardOut", "standardError"
+
+//         // set to false to disable detailed failure logs
+//         showExceptions true
+
+//         // enable to see standard out and error streams inline with the test results
+//         showStandardStreams true
+//     }
+
+//     // Fail the 'test' task on the first test failure
+//     failFast = true
+
+//     debugOptions {
+//         // make the following true if you want to attach with a debugger while testing
+//         enabled = false
+//         port = 4455
+//         server = true
+//         suspend = true
+//     }
+
+//     // generate a report on coverage
+//     finalizedBy jacocoTestReport
+// }
+
 test {
     testLogging {
         exceptionFormat "full" // default is "short"
-        // uncomment the following to see the unit test progress in the output
-        //events "started", "passed", "skipped", "failed", "standardOut", "standardError"
         events "passed", "skipped", "failed", "standardOut", "standardError"
-
-        // set to false to disable detailed failure logs
         showExceptions true
-
-        // enable to see standard out and error streams inline with the test results
         showStandardStreams true
     }
 
     // Fail the 'test' task on the first test failure
     failFast = true
+
+    // Add this to ensure JUnit XML reports are generated
+    reports {
+        junitXml.required = true
+        junitXml.outputLocation = file("$buildDir/test-results/test")
+        html.required = true
+        html.outputLocation = file("$buildDir/reports/tests")
+    }
 
     debugOptions {
         // make the following true if you want to attach with a debugger while testing
@@ -663,5 +703,8 @@ task runPerfTests(type:Exec) {
     }
 }
 
+tasks.named('sonarqube').configure {
+    dependsOn test, jacocoTestReport
+}
 
 
