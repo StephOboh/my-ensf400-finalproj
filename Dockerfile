@@ -1,5 +1,5 @@
 # use gradle with jdk 11 as the base image
-FROM gradle:7.6.1-jdk11
+FROM gradle:7.6.4-jdk11
 
 # set working directory to app
 WORKDIR /app
