@@ -287,7 +287,7 @@ sonarqube {
         // property "sonar.login", project.findProperty('sonar.login')  // This will use the token from gradle.properties
         // property "sonar.java.test.binaries", "build/classes/java/test"
 
-        property "sonar.host.url", "https://bookish-meme-v6v5j7wrq4ppf6x6-9000.app.github.dev/" 
+        property "sonar.host.url", "http://localhost:9000" 
         property "sonar.login", project.findProperty('sonar.login') ?: System.getenv('SONAR_TOKEN')
         property "sonar.projectKey", "$projectname"
         property "sonar.projectName", "$projectname"
