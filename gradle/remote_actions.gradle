@@ -3,8 +3,10 @@
 
 remotes {
     uitestbox {
-        host = 'uitestbox'
-        user = 'cuser'
+        // host = 'uitestbox'
+        // user = 'cuser'
+        host = 'localhost'  // Target services in Codespaces
+        user = 'StephOboh'  // Change to your Codespaces user
         fileTransfer = 'scp'
     }
 }
